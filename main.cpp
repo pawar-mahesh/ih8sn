@@ -134,6 +134,13 @@ int main(int argc, char *argv[]) {
         property_override("ro.boot.veritymode", "enforcing");
         property_override("ro.boot.warranty_bit", "0");
         property_override("ro.warranty_bit", "0");
+        property_override("ro.boot.selinux", "enforcing");
+        property_override("ro.secure", "1");
+        property_override("ro.build.keys", "release-keys");
+        property_override("ro.vendor.boot.warranty_bit", "0");
+        property_override("ro.vendor.warranty_bit", "0");
+        property_override("vendor.boot.vbmeta.device_state", "locked");
+        property_override("vendor.boot.verifiedbootstate", "green");     
     }
 
     return 0;
