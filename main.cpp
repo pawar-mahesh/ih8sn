@@ -46,6 +46,7 @@ std::vector<std::string> property_list(const std::string &prefix, const std::str
 
     for (const std::string &part : {
         "",
+        "boot.",
         "bootimage.",
         "odm_dlkm.",
         "odm.",
@@ -55,6 +56,7 @@ std::vector<std::string> property_list(const std::string &prefix, const std::str
         "system.",
         "vendor_dlkm.",
         "vendor.",
+        "vendor.boot.",
     }) {
         props.emplace_back(prefix + part + suffix);
     }
@@ -85,6 +87,7 @@ int main(int argc, char *argv[]) {
     const auto debuggable = config.find("DEBUGGABLE");
     const auto manufacturer_name = config.find("MANUFACTURER_NAME");
     const auto product_name = config.find("PRODUCT_NAME");
+    const auto secure = config.find("SECURE");
 
     if (is_init_stage && build_fingerprint != config.end()) {
         property_override(property_list("ro.", "build.fingerprint"),
@@ -120,6 +123,10 @@ int main(int argc, char *argv[]) {
 
     if (is_init_stage && debuggable != config.end()) {
         property_override("ro.debuggable", debuggable->second.c_str());
+    }
+
+    if (is_init_stage && secure != config.end()) {
+        property_override("ro.secure", secure->second.c_str());
     }
 
     if (is_init_stage && manufacturer_name != config.end()) {
