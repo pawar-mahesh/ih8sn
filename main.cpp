@@ -52,6 +52,7 @@ std::vector<std::string> property_list(const std::string &prefix, const std::str
         "odm.",
         "oem.",
         "product.",
+        "system_dlkm.",
         "system_ext.",
         "system.",
         "vendor_dlkm.",
