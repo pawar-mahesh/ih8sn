@@ -92,6 +92,7 @@ int main(int argc, char *argv[]) {
     const auto product_model = config.find("PRODUCT_MODEL");
     const auto product_name = config.find("PRODUCT_NAME");
     const auto secure = config.find("SECURE");
+    const auto product_first_api_level = config.find("BUILD_VERSION_DEVICE_INITIAL_SDK_INT");
 
     if (is_init_stage && build_fingerprint != config.end()) {
         property_override(property_list("ro.", "build.fingerprint"),
@@ -152,6 +153,10 @@ int main(int argc, char *argv[]) {
 
     if (is_init_stage && product_name != config.end()) {
         property_override(property_list("ro.product.", "name"), product_name->second.c_str());
+    }
+
+    if (is_boot_completed_stage && product_first_api_level != config.end()) {
+        property_override("ro.product.first_api_level", product_first_api_level->second.c_str());
     }
 
     if (is_boot_completed_stage) {
