@@ -81,6 +81,7 @@ int main(int argc, char *argv[]) {
     const auto build_fingerprint = config.find("BUILD_FINGERPRINT");
     const auto build_description = config.find("BUILD_DESCRIPTION");
     const auto build_security_patch_date = config.find("BUILD_SECURITY_PATCH_DATE");
+    const auto vendor_security_patch_date = config.find("VENDOR_SECURITY_PATCH_DATE");
     const auto build_tags = config.find("BUILD_TAGS");
     const auto build_type = config.find("BUILD_TYPE");
     const auto build_version_release = config.find("BUILD_VERSION_RELEASE");
@@ -153,6 +154,11 @@ int main(int argc, char *argv[]) {
 
     if (is_init_stage && product_name != config.end()) {
         property_override(property_list("ro.product.", "name"), product_name->second.c_str());
+    }
+
+    if (is_boot_completed_stage && vendor_security_patch_date != config.end()) {
+        property_override("ro.vendor.build.security_patch",
+                vendor_security_patch_date->second.c_str());
     }
 
     if (is_boot_completed_stage && product_first_api_level != config.end()) {
