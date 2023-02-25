@@ -88,6 +88,7 @@ int main(int argc, char *argv[]) {
     const auto build_version_release_or_codename = config.find("BUILD_VERSION_RELEASE_OR_CODENAME");
     const auto debuggable = config.find("DEBUGGABLE");
     const auto manufacturer_name = config.find("MANUFACTURER_NAME");
+    const auto product_board = config.find("PRODUCT_BOARD");
     const auto product_brand = config.find("PRODUCT_BRAND");
     const auto product_device = config.find("PRODUCT_DEVICE");
     const auto product_model = config.find("PRODUCT_MODEL");
@@ -138,6 +139,10 @@ int main(int argc, char *argv[]) {
     if (is_init_stage && manufacturer_name != config.end()) {
         property_override(property_list("ro.product.", "manufacturer"),
                 manufacturer_name->second.c_str());
+    }
+
+    if (is_init_stage && product_board != config.end()) {
+        property_override(property_list("ro.product.", "board"), product_board->second.c_str());
     }
 
     if (is_init_stage && product_brand != config.end()) {
